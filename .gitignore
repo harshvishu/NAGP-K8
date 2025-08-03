@@ -1,0 +1,17 @@
+# Node.js
+node_modules/
+npm-debug.log
+.env
+
+# Docker
+*.tar
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+
+# Kubernetes
+*.yaml~
