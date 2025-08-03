@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: seed-todo-db
+  namespace: todo-app
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: seed-db
+        image: postgres:16
+        command: ["sh", "-c"]
+        args:
+          - |
+            PGPASSWORD=$POSTGRES_PASSWORD psql -h $DB_HOST -U $DB_USER -d $DB_NAME <<EOF
+            INSERT INTO "Todos" (title, completed) VALUES
+            ('Learn K8s', false),
+            ('Deploy API', false),
+            ('Test Ingress', true),
+            ('Setup CI/CD', false),
+            ('Write README', true);
+            EOF
+        env:
+        - name: DB_HOST
+          value: postgres
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: todo-config
+              key: DB_NAME
+        - name: DB_USER
+          valueFrom:
+            configMapKeyRef:
+              name: todo-config
+              key: DB_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_PASSWORD
