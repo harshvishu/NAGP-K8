@@ -1,5 +1,8 @@
 # Todo API with Postgres on Kubernetes
 
+## Project URL
+Github [https://github.com/harshvishu/NAGP-K8]
+
 This project deploys a **Node.js Todo API** with a **PostgreSQL database** on Kubernetes.  
 It supports **persistent storage**, **rolling updates**, and **Ingress access**.
 
