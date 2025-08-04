@@ -12,15 +12,23 @@ spec:
         image: postgres:16
         command: [ "sh", "-c" ]
         args:
-            - |
-              psql "host=$POSTGRES_HOST user=$POSTGRES_USER password=$POSTGRES_PASSWORD dbname=$POSTGRES_DB" <<EOF
-              INSERT INTO "Todos" (title, completed, "createdAt", "updatedAt") VALUES
+          - |
+            psql "host=$POSTGRES_HOST user=$POSTGRES_USER password=$POSTGRES_PASSWORD dbname=$POSTGRES_DB" <<'EOF'
+            CREATE TABLE IF NOT EXISTS "Todos" (
+              id SERIAL PRIMARY KEY,
+              title VARCHAR(255) NOT NULL,
+              completed BOOLEAN DEFAULT false,
+              "createdAt" TIMESTAMP NOT NULL DEFAULT now(),
+              "updatedAt" TIMESTAMP NOT NULL DEFAULT now()
+            );
+
+            INSERT INTO "Todos" (title, completed, "createdAt", "updatedAt") VALUES
               ('Learn K8s', false, now(), now()),
               ('Setup Ingress', true, now(), now()),
               ('Deploy API', false, now(), now()),
               ('Configure Postgres PVC', true, now(), now()),
               ('Test Rolling Update', false, now(), now());
-              EOF
+            EOF
         envFrom:
         - configMapRef:
             name: postgres-config

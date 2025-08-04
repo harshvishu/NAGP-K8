@@ -10,12 +10,14 @@ It supports **persistent storage**, **rolling updates**, and **Ingress access**.
 ```
 
 k8s/
+namespace.yaml                      # set the namespace for our deployment
+db-seed.yaml                        # Job to seed the postgres db
+
 postgres/postgres-configmap.yaml    # ConfigMap for Postgres
 postgres/postgres-secret.yaml       # Secret for Postgres
 postgres/postgres-pvc.yaml          # PVC for database persistence
 postgres/postgres-deployment.yaml   # Postgres Deployment
 postgres/postgres-service.yaml      # Postgres Service
-postgres/postgres-seed.yaml         # Job to seed the postgres db
 
 todo-api/todo-configmap.yaml        # ConfigMap for Todo API
 todo-api/todo-secret.yaml           # Secret for Todo API
@@ -32,7 +34,7 @@ todo-api/todo-ingress.yaml          # Todo API Ingress
 - Kubernetes cluster (local or cloud, e.g., Minikube, OrbStack, GKE)
 - kubectl configured to access the cluster
 - NGINX Ingress Controller installed
-- Docker image of the API pushed to a registry
+- Docker image of the API pushed to a registry [https://hub.docker.com/repository/docker/harshvishu/todo-api/]
 
 ---
 
