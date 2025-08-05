@@ -45,29 +45,31 @@ todo-api/todo-ingress.yaml          # Todo API Ingress
 
 1. **Create a Namespace**
    ```bash
-   kubectl create namespace todo-app
+   kubectl apply -f k8s/namespace.yaml
 ````
 
 2. **Deploy Postgres**
 
    ```bash
-   kubectl apply -n todo-app -f k8s/postgres-config.yaml
-   kubectl apply -n todo-app -f k8s/postgres-storage.yaml
-   kubectl apply -n todo-app -f k8s/postgres-deployment.yaml
+   kubectl apply -f k8s/postgres/
    ```
 
-3. **Deploy Todo API**
+3. **Add initial data**
 
    ```bash
-   kubectl apply -n todo-app -f k8s/todo-config.yaml
-   kubectl apply -n todo-app -f k8s/todo-deployment.yaml
+   kubectl apply -f k8/db-seed.yaml 
+   ```
+
+4. **Deploy Todo API**
+
+   ```bash
+   kubectl apply -f k8s/todo-api/
    ```
 
 4. **Verify Resources**
 
    ```bash
    kubectl get all -n todo-app
-   kubectl get pvc -n todo-app
    ```
 
 5. **Access the API**
